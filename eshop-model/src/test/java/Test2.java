@@ -3,6 +3,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import dao.jpa.DAOClient;
+import model.Achat;
 import model.Client;
 import model.Fournisseur;
 import model.Personne;
@@ -18,14 +20,12 @@ import java.util.List;
 
 
 
-public class Test {
+public class Test2 {
 	
 	public static void test(String[] args)
 	
 	{
 		
-		
-
 		
 		  
 		  EntityManagerFactory emf =
@@ -33,7 +33,7 @@ public class Test {
 		  
 		  EntityManager em = emf.createEntityManager();
 
-		  Fournisseur f1 = new Fournisseur("nom", "prenom", "Societe");
+		  Fournisseur f1 = new Fournisseur("nom", "prenom", "Societe", null, null, null);
 		  Fournisseur f2 = new Fournisseur("nom", "prenom", "Societe2");
 		  
 		  Produit produit1= new Produit("lib1", 10.0, f1);
@@ -139,44 +139,20 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
-
-
+		
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		
+		Client c =new Client("nom", "prenom", "login", "password", 30, LocalDate.parse("2021-02-02"), null) ;
+		Context.getInstance().getDaoPersonne().save(c);
 
-		Query requete = em.createQuery("from Produit p where p.libelle like :lib",Produit.class);
-		requete.setParameter("lib", "%W%");
+		Personne test = Context.getInstance().getDaoPersonne().connect("login", "password");
+		System.out.println(test);
 		
-		List<Produit> produits = requete.getResultList();
-		
-	
-		for(Produit p : produits) 
-		{
-			System.out.println(p);
-		}
-		
-		
-		
-		Query requeteConnect = em.createQuery("Select p from Personne p where p.nom=:login and p.prenom=:password",Personne.class);
-		requeteConnect.setParameter("login", "Abid");
-		requeteConnect.setParameter("password", "Jordan");
-		Personne connected=null;
-		
-		try {
-			connected =  (Personne) requeteConnect.getSingleResult();
-		}
-		catch(Exception e) {e.printStackTrace();System.out.println("Identifiants invalides");}
-		
-	
-
-		Query q = em.createNamedQuery("Produit.findByLibelle",Produit.class);
-		q.setParameter("lelibelle","PS5");
-		List<Produit> prods = q.getResultList();
-		
-		
-		System.out.println(connected);
-		em.close();
 		
 		Context.getInstance().closeEmf();
+		
+
+		
 		
 	} 
 }

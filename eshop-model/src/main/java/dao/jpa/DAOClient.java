@@ -3,6 +3,7 @@ package dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import dao.IDAOClient;
 import model.Client;
@@ -20,11 +21,14 @@ public class DAOClient implements IDAOClient{
 
 	@Override
 	public List<Client> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		Query requete = em.createQuery("from Client c",Client.class);
+		List<Client> client = requete.getResultList();
+		em.close();
+		return client;
+
 	}
-
-
 	@Override
 	public Client save(Client o) {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();

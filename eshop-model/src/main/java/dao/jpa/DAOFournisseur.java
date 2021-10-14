@@ -3,6 +3,7 @@ package dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import dao.IDAOFournisseur;
 import model.Fournisseur;
@@ -20,8 +21,11 @@ public class DAOFournisseur implements IDAOFournisseur{
 
 	@Override
 	public List<Fournisseur> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		Query requete = em.createQuery("from Fournisseur f",Fournisseur.class);
+		List<Fournisseur> fournisseurs = requete.getResultList();
+		em.close();
+		return fournisseurs;
 	}
 
 

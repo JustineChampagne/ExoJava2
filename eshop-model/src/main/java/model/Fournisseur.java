@@ -20,10 +20,15 @@ public class Fournisseur extends Personne{
 
 	public Fournisseur() {}
 	
-	public Fournisseur(String nom, String prenom, String societe) {
-		super(nom, prenom);
+
+
+	public Fournisseur(String nom, String prenom, String login, String password, String societe, List<Produit> stock) {
+		super(nom, prenom, login, password);
 		this.societe = societe;
+		this.stock = stock;
 	}
+
+
 
 	public String getSociete() {
 		return societe;
@@ -42,13 +47,14 @@ public class Fournisseur extends Personne{
 		this.stock = stock;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Fournisseur [societe=" + societe + ", id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
+		return "Fournisseur [societe=" + societe + ", stock=" + stock + ", id=" + id + ", nom=" + nom + ", prenom="
+				+ prenom + ", login=" + login + ", password=" + password + "]";
 	}
-	
-	
-	
-	
 
+	
+	
 }

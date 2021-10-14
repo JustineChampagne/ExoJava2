@@ -3,6 +3,7 @@ package dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import dao.IDAOPersonne;
 import model.Personne;
@@ -20,8 +21,11 @@ public class DAOPersonne implements IDAOPersonne{
 
 	@Override
 	public List<Personne> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		Query requete = em.createQuery("from Personne p",Personne.class);
+		List<Personne> personnes = requete.getResultList();
+		em.close();
+		return personnes;
 	}
 
 
@@ -47,7 +51,23 @@ public class DAOPersonne implements IDAOPersonne{
 
 	@Override
 	public Personne connect(String login, String password) {
-		return null;
+		
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		
+		Query requeteConnect = em.createQuery("Select p from Personne p where p.login=:login and p.password=:password",Personne.class);
+		requeteConnect.setParameter("login", login);
+		requeteConnect.setParameter("password", password);
+		Personne connected=null;
+		
+		try {
+			connected =  (Personne) requeteConnect.getSingleResult();
+		}
+		catch(Exception e) {e.printStackTrace();System.out.println("Identifiants invalides");}
+
+		//System.out.println(connected);
+		return connected;
+		
+		
 	}
 
 }

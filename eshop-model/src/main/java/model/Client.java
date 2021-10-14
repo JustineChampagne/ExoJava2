@@ -25,11 +25,17 @@ public class Client extends Personne {
 	
 	public Client() {}
 	
-	public Client(String nom, String prenom, int age, LocalDate dateNaissance) {
-		super(nom, prenom);
+	
+
+	public Client(String nom, String prenom, String login, String password, int age, LocalDate dateNaissance,
+			List<Achat> achats) {
+		super(nom, prenom, login, password);
 		this.age = age;
 		this.dateNaissance = dateNaissance;
+		this.achats = achats;
 	}
+
+
 
 	public int getAge() {
 		return age;
@@ -60,11 +66,14 @@ public class Client extends Personne {
 		this.achats = achats;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Client [age=" + age + ", dateNaissance=" + dateNaissance + ", id=" + id
-				+ ", nom=" + nom + ", prenom=" + prenom + "]";
+		return "Client [age=" + age + ", dateNaissance=" + dateNaissance + ", achats=" + achats + ", id=" + id
+				+ ", nom=" + nom + ", prenom=" + prenom + ", login=" + login + ", password=" + password + "]";
 	}
+
 
 	
 	

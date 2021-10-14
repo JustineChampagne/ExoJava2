@@ -3,6 +3,7 @@ package dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import dao.IDAOAchat;
 import model.Achat;
@@ -20,8 +21,11 @@ public class DAOAchat implements IDAOAchat{
 
 	@Override
 	public List<Achat> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		Query requete = em.createQuery("from Achat a",Achat.class);
+		List<Achat> achats = requete.getResultList();
+		em.close();
+		return achats;
 	}
 
 
